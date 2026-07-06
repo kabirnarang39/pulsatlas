@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { NetlifyBlobStore } from '@/lib/storage/blobStore'
 import { ALL_CATEGORIES } from '@/lib/gdelt/categoryMap'
 import { queryEvents } from '@/lib/gdelt/eventsQuery'
+import { cacheControlFor } from '@/lib/gdelt/cacheControl'
+import { todayUtc } from '@/lib/date'
 import type { EventCategory } from '@/lib/gdelt/types'
 
 export async function GET(request: NextRequest) {
@@ -22,5 +24,8 @@ export async function GET(request: NextRequest) {
     : ALL_CATEGORIES
   const events = await queryEvents(blobStore, date, categories)
 
-  return NextResponse.json({ date, events })
+  return NextResponse.json(
+    { date, events },
+    { headers: { 'Cache-Control': cacheControlFor(date, todayUtc()) } }
+  )
 }
