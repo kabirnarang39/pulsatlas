@@ -18,28 +18,46 @@ export default function HomePage() {
   const [selectedEvent, setSelectedEvent] = useState<GdeltEvent | null>(null)
 
   return (
-    <main>
-      <header>
-        <h1>Pulsatlas</h1>
-        <SupportLink />
-      </header>
+    <main className="relative bg-background font-body text-foreground">
+      <div className="fixed inset-0 z-0">
+        <Globe events={events} onSelectEvent={setSelectedEvent} />
+      </div>
 
-      <CategoryFilter selected={categories} onChange={setCategories} />
-      <TimeScrubber value={dashDate} min={EARLIEST_DATE} max={toDashDate(todayUtc())} onChange={setDashDate} />
+      <div className="pointer-events-none fixed inset-0 z-10 flex flex-col">
+        <header className="pointer-events-auto flex flex-wrap items-center justify-between gap-3 border-b border-white/5 bg-card/70 px-4 py-3 backdrop-blur-md sm:px-6">
+          <h1 className="font-heading text-xl font-semibold tracking-tight sm:text-2xl">Pulsatlas</h1>
+          <SupportLink />
+        </header>
 
-      {status === 'error' && (
-        <div role="alert">
-          Couldn&apos;t load this day&apos;s events.{' '}
-          <button type="button" onClick={retry}>
-            Retry
-          </button>
+        <div className="pointer-events-auto flex flex-wrap items-center gap-3 border-b border-white/5 bg-card/40 px-4 py-3 backdrop-blur-md sm:px-6">
+          <CategoryFilter selected={categories} onChange={setCategories} />
+          <TimeScrubber value={dashDate} min={EARLIEST_DATE} max={toDashDate(todayUtc())} onChange={setDashDate} />
         </div>
-      )}
 
-      <Globe events={events} onSelectEvent={setSelectedEvent} />
+        {status === 'error' && (
+          <div
+            role="alert"
+            className="pointer-events-auto flex items-center gap-3 border-b border-destructive/30 bg-destructive/10 px-4 py-2 text-sm text-destructive backdrop-blur-md sm:px-6"
+          >
+            Couldn&apos;t load this day&apos;s events.
+            <button
+              type="button"
+              onClick={retry}
+              className="rounded-md border border-destructive/40 px-2 py-1 font-medium transition hover:bg-destructive/20"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        <div className="flex-1" />
+
+        <div className="pointer-events-auto flex justify-center border-t border-white/5 bg-card/40 px-4 py-3 backdrop-blur-md sm:px-6">
+          <AdSlot slotId="1111111111" />
+        </div>
+      </div>
+
       <ArticlePanel event={selectedEvent} onClose={() => setSelectedEvent(null)} />
-
-      <AdSlot slotId="1111111111" />
     </main>
   )
 }

@@ -7,6 +7,7 @@ export function SupportLink() {
     <a
       href={upiLink}
       aria-label="Support Pulsatlas via UPI"
+      className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-card px-3 py-1.5 text-sm font-medium text-foreground transition hover:border-accent hover:text-accent"
     >
       ☕ Support Pulsatlas
     </a>

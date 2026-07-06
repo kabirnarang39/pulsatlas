@@ -17,17 +17,25 @@ export function CategoryFilter({ selected, onChange }: CategoryFilterProps) {
   }
 
   return (
-    <div role="group" aria-label="Category filter">
-      {ALL_CATEGORIES.map((category) => (
-        <button
-          key={category}
-          type="button"
-          aria-pressed={selected.includes(category)}
-          onClick={() => toggle(category)}
-        >
-          {CATEGORY_LABELS[category]}
-        </button>
-      ))}
+    <div role="group" aria-label="Category filter" className="flex flex-wrap items-center gap-2">
+      {ALL_CATEGORIES.map((category) => {
+        const isSelected = selected.includes(category)
+        return (
+          <button
+            key={category}
+            type="button"
+            aria-pressed={isSelected}
+            onClick={() => toggle(category)}
+            className={
+              isSelected
+                ? 'rounded-full border border-accent bg-accent/20 px-3 py-1.5 text-sm font-medium text-foreground transition'
+                : 'rounded-full border border-white/10 bg-card px-3 py-1.5 text-sm font-medium text-muted transition hover:border-white/25 hover:text-foreground'
+            }
+          >
+            {CATEGORY_LABELS[category]}
+          </button>
+        )
+      })}
     </div>
   )
 }
