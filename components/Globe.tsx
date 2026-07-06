@@ -11,6 +11,10 @@ const CATEGORY_COLORS: Record<GdeltEvent['category'], string> = {
   protest: '#F59E0B',
   cooperation: '#22C55E',
   politics: '#3B82F6',
+  disaster: '#EA580C',
+  economy: '#A855F7',
+  health: '#EC4899',
+  environment: '#06B6D4',
   other: '#94A3B8',
 }
 

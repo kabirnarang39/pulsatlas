@@ -50,4 +50,10 @@ describe('Globe', () => {
     expect(await screen.findByTestId('point-color-1')).toHaveTextContent(toneColor(-8))
     expect(await screen.findByTestId('point-color-2')).toHaveTextContent(toneColor(3))
   })
+
+  it('colors a disaster-category point with the new disaster color', async () => {
+    const disasterEvent = { id: '3', lat: 3, lon: 3, category: 'disaster', avgTone: 0 } as GdeltEvent
+    render(<Globe events={[disasterEvent]} onSelectEvent={() => {}} />)
+    expect(await screen.findByTestId('point-color-3')).toHaveTextContent('#EA580C')
+  })
 })
