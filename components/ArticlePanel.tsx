@@ -8,6 +8,12 @@ interface ArticlePanelProps {
   onClose: () => void
 }
 
+function toneLabel(avgTone: number): string {
+  if (avgTone < -1) return 'Negative'
+  if (avgTone > 1) return 'Positive'
+  return 'Neutral'
+}
+
 export function ArticlePanel({ event, onClose }: ArticlePanelProps) {
   const [renderedEvent, setRenderedEvent] = useState<GdeltEvent | null>(event)
   const [isOpen, setIsOpen] = useState(Boolean(event))
@@ -49,6 +55,9 @@ export function ArticlePanel({ event, onClose }: ArticlePanelProps) {
       </p>
       <p className="mt-2 text-base font-medium">{renderedEvent.locationName}</p>
       {actors && <p className="mt-1 text-sm text-muted">{actors}</p>}
+      <p className="mt-1 text-sm text-muted">
+        Tone: {renderedEvent.avgTone.toFixed(1)} · {toneLabel(renderedEvent.avgTone)}
+      </p>
       <a
         href={renderedEvent.sourceUrl}
         target="_blank"

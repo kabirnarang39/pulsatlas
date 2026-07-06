@@ -10,6 +10,7 @@ const event = {
   actor1Name: 'UNITED STATES',
   actor2Name: 'CHINA',
   sourceUrl: 'https://example.com/story',
+  avgTone: -4.2,
 } as GdeltEvent
 
 describe('ArticlePanel', () => {
@@ -42,5 +43,20 @@ describe('ArticlePanel', () => {
 
     fireEvent.transitionEnd(container.querySelector('aside')!)
     expect(container).toBeEmptyDOMElement()
+  })
+
+  it('shows a negative tone label for a strongly negative avgTone', () => {
+    render(<ArticlePanel event={{ ...event, avgTone: -4.2 }} onClose={() => {}} />)
+    expect(screen.getByText('Tone: -4.2 · Negative')).toBeInTheDocument()
+  })
+
+  it('shows a neutral tone label for an avgTone near zero', () => {
+    render(<ArticlePanel event={{ ...event, avgTone: 0.3 }} onClose={() => {}} />)
+    expect(screen.getByText('Tone: 0.3 · Neutral')).toBeInTheDocument()
+  })
+
+  it('shows a positive tone label for a strongly positive avgTone', () => {
+    render(<ArticlePanel event={{ ...event, avgTone: 5.7 }} onClose={() => {}} />)
+    expect(screen.getByText('Tone: 5.7 · Positive')).toBeInTheDocument()
   })
 })
