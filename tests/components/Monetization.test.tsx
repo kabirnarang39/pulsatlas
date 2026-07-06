@@ -24,11 +24,9 @@ describe('AdSlot', () => {
 })
 
 describe('SupportLink', () => {
-  it('links out to the Buy Me a Coffee page', () => {
+  it('links to a UPI payment request', () => {
     render(<SupportLink />)
-    expect(screen.getByLabelText('Buy me a coffee')).toHaveAttribute(
-      'href',
-      expect.stringContaining('buymeacoffee.com')
-    )
+    const link = screen.getByLabelText('Support Pulsatlas via UPI')
+    expect(link).toHaveAttribute('href', 'upi://pay?pa=8448337343@upi&pn=Pulsatlas')
   })
 })
