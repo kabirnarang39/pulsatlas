@@ -12,7 +12,7 @@ export class NetlifyBlobStore implements BlobStore {
   private store = getStore('pulsatlas-events')
 
   async getEvents(day: string, category: string): Promise<GdeltEvent[]> {
-    const raw = await this.store.get(`${day}/${category}.json`)
+    const raw = await this.store.get(`${day}/${category}.json`, { type: 'text' })
     return raw ? JSON.parse(raw) : []
   }
 
@@ -21,7 +21,7 @@ export class NetlifyBlobStore implements BlobStore {
   }
 
   async isFinalized(day: string): Promise<boolean> {
-    const raw = await this.store.get(`${day}/.finalized`)
+    const raw = await this.store.get(`${day}/.finalized`, { type: 'text' })
     return raw === 'true'
   }
 
