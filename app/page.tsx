@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Globe } from '@/components/Globe'
 import { CategoryFilter } from '@/components/CategoryFilter'
+import { ColorModeToggle, type ColorMode } from '@/components/ColorModeToggle'
 import { TimeScrubber } from '@/components/TimeScrubber'
 import { PlaybackButton } from '@/components/PlaybackButton'
 import { ArticlePanel } from '@/components/ArticlePanel'
@@ -18,6 +19,7 @@ export default function HomePage() {
   const [dashDate, setDashDate] = useState(toDashDate(todayUtc()))
   const { events, categories, setCategories, status, retry } = useEvents(toCompactDate(dashDate))
   const [selectedEvent, setSelectedEvent] = useState<GdeltEvent | null>(null)
+  const [colorMode, setColorMode] = useState<ColorMode>('category')
   const { isPlaying, toggle } = usePlayback(dashDate, setDashDate, {
     min: EARLIEST_DATE,
     max: toDashDate(todayUtc()),
@@ -32,7 +34,7 @@ export default function HomePage() {
   return (
     <main className="relative bg-background font-body text-foreground">
       <div className="fixed inset-0 z-0">
-        <Globe events={events} onSelectEvent={setSelectedEvent} />
+        <Globe events={events} onSelectEvent={setSelectedEvent} colorMode={colorMode} />
       </div>
 
       <div className="pointer-events-none fixed inset-0 z-10 flex flex-col">
@@ -43,6 +45,7 @@ export default function HomePage() {
 
         <div className="pointer-events-auto flex flex-wrap items-center gap-3 border-b border-white/5 bg-card/40 px-4 py-3 backdrop-blur-md sm:px-6">
           <CategoryFilter selected={categories} onChange={setCategories} />
+          <ColorModeToggle mode={colorMode} onChange={setColorMode} />
           <TimeScrubber value={dashDate} min={EARLIEST_DATE} max={toDashDate(todayUtc())} onChange={handleDateChange} />
           <PlaybackButton isPlaying={isPlaying} onToggle={toggle} />
         </div>
