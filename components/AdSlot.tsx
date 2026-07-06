@@ -30,7 +30,7 @@ export function AdSlot({ slotId }: AdSlotProps) {
     <ins
       className="adsbygoogle"
       style={{ display: 'inline-block', width: '728px', height: '90px' }}
-      data-ad-client="ca-pub-REPLACE_WITH_PUBLISHER_ID"
+      data-ad-client="ca-pub-2685605973411576"
       data-ad-slot={slotId}
     />
   )
