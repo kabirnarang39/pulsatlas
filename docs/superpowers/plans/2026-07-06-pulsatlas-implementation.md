@@ -2,7 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build Pulsatlas v1 — a web app that renders live and historical GDELT news events as pins on a dark 3D globe, with category filters, a date scrubber, AdSense + Buy Me a Coffee monetization, and bold-explorer branding.
+**Goal:** Build Pulsatlas v1 — a web app that renders live and historical GDELT news events as pins on a dark 3D globe, with category filters, a date scrubber, AdSense + UPI-deep-link monetization, and bold-explorer branding.
+
+> **Amendment (post-Task 15):** the donate mechanism below is written as Buy Me a Coffee, matching the original design. Mid-build, the user (India-based) confirmed BMC doesn't support India payouts, so `SupportLink` was switched to a plain `upi://pay?pa=8448337343@upi&pn=Pulsatlas` deep link (commit `216eabe`). The Task 14/16 code blocks below are left as the historical record of what was originally planned — see `components/SupportLink.tsx` and its test for the actual shipped behavior.
 
 **Architecture:** Next.js (App Router, TypeScript) frontend on Netlify, rendering a `react-globe.gl` globe. Two Netlify Scheduled Functions (ingest every 15 min, finalize nightly) pull GDELT's free raw Events export and write pre-aggregated per-day/per-category JSON into Netlify Blobs — no database, no BigQuery. A Next.js API route serves cached blob data to the browser. No user accounts; category prefs live in `localStorage`.
 

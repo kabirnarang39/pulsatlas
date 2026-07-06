@@ -47,7 +47,7 @@ Pulsatlas is a web app that lets people explore world news on a 3D globe instead
 ## 5. Monetization
 
 - **Google AdSense:** one persistent banner slot (footer or side rail, positioned so it never overlaps the globe interaction area) + one slot inside the article side-panel. Ad slot rendered as its own component so a future "sponsored region/pin" native placement can slot in later without touching layout code.
-- **Buy Me a Coffee:** persistent icon/link in the header, plus a dedicated mention in an About/Support panel. No custom payment code — fully outsourced to BMC's hosted page.
+- **Donate (UPI):** persistent icon/link in the header, plus a dedicated mention in an About/Support panel. A plain `upi://pay` deep link to the operator's VPA — no payment platform, no custom payment code, no platform cut. (Originally planned as Buy Me a Coffee; switched because BMC doesn't support India payouts.)
 - No subscriptions, no paywall, no accounts tying to payment in v1.
 
 ## 6. Branding
@@ -69,7 +69,7 @@ Pulsatlas is a web app that lets people explore world news on a 3D globe instead
 
 - Ingest function failure (GDELT fetch error/timeout): retry on next 15-min run; frontend simply shows the last successfully cached day — no user-facing error for a single missed cycle.
 - Frontend blob fetch failure: show inline "couldn't load this day's events, retry" state on the globe, not a blank/broken globe.
-- AdSense/BMC script failure: fails silently (ad slot collapses / donate link just doesn't render) — never blocks core globe functionality.
+- AdSense script failure: fails silently (ad slot collapses) — never blocks core globe functionality.
 
 ## 8. Explicitly Out of Scope (v1)
 
@@ -85,4 +85,4 @@ Pulsatlas is a web app that lets people explore world news on a 3D globe instead
 - Ingest function: unit test CAMEO-code → category mapping, and CSV-parsing against a sample GDELT export fixture.
 - Finalize function: test that a day's blob is only locked once fully published, not mid-day.
 - Frontend: component tests for globe pin rendering given a fixture blob, category filter toggling, and scrubber date-change fetching the right blob.
-- Manual: verify AdSense slots render without blocking layout when ad-blocked; verify BMC link opens correctly.
+- Manual: verify AdSense slots render without blocking layout when ad-blocked; verify UPI link opens the device's payment-app picker correctly.
