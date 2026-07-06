@@ -52,8 +52,16 @@ export default function HomePage() {
 
         <div className="flex-1" />
 
-        <div className="pointer-events-auto flex max-h-24 justify-center overflow-hidden border-t border-white/5 bg-card/40 px-4 py-3 backdrop-blur-md sm:px-6">
-          <AdSlot slotId="1111111111" />
+        <div
+          className="pointer-events-auto flex justify-center overflow-hidden border-t border-white/5 bg-card/40 px-4 py-3 backdrop-blur-md sm:px-6"
+          style={{ maxHeight: '6rem' }}
+        >
+          {/* AdSense's script forcibly overrides height/max-height with !important on
+              whatever element directly wraps the <ins> tag. This inner div absorbs that —
+              the outer bar's own maxHeight (untouched by Google's script) still clips it. */}
+          <div className="w-full max-w-3xl overflow-hidden">
+            <AdSlot slotId="1111111111" />
+          </div>
         </div>
       </div>
 
