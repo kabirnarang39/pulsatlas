@@ -1,6 +1,8 @@
 'use client'
 import dynamic from 'next/dynamic'
 import type { GdeltEvent } from '@/lib/gdelt/types'
+import { toneColor } from '@/lib/gdelt/toneColor'
+import type { ColorMode } from './ColorModeToggle'
 
 const ReactGlobe = dynamic(() => import('react-globe.gl'), { ssr: false })
 
@@ -15,9 +17,10 @@ const CATEGORY_COLORS: Record<GdeltEvent['category'], string> = {
 interface GlobeProps {
   events: GdeltEvent[]
   onSelectEvent: (event: GdeltEvent) => void
+  colorMode?: ColorMode
 }
 
-export function Globe({ events, onSelectEvent }: GlobeProps) {
+export function Globe({ events, onSelectEvent, colorMode = 'category' }: GlobeProps) {
   return (
     <ReactGlobe
       backgroundColor="#0B0B10"
@@ -25,7 +28,10 @@ export function Globe({ events, onSelectEvent }: GlobeProps) {
       pointsData={events}
       pointLat="lat"
       pointLng="lon"
-      pointColor={(e: object) => CATEGORY_COLORS[(e as GdeltEvent).category]}
+      pointColor={(e: object) => {
+        const event = e as GdeltEvent
+        return colorMode === 'tone' ? toneColor(event.avgTone) : CATEGORY_COLORS[event.category]
+      }}
       pointRadius={0.4}
       onPointClick={(point: object) => onSelectEvent(point as GdeltEvent)}
     />
