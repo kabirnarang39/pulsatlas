@@ -18,3 +18,17 @@ describe('categoryForRootCode', () => {
     expect(categoryForRootCode('99')).toBe('other')
   })
 })
+
+describe('ALL_CATEGORIES and CATEGORY_LABELS', () => {
+  it('includes the four GKG-only categories alongside the five CAMEO-derived ones', async () => {
+    const { ALL_CATEGORIES, CATEGORY_LABELS } = await import('@/lib/gdelt/categoryMap')
+    expect(ALL_CATEGORIES).toEqual([
+      'conflict', 'protest', 'cooperation', 'politics',
+      'disaster', 'economy', 'health', 'environment', 'other',
+    ])
+    expect(CATEGORY_LABELS.disaster).toBe('Disaster')
+    expect(CATEGORY_LABELS.economy).toBe('Economy')
+    expect(CATEGORY_LABELS.health).toBe('Health')
+    expect(CATEGORY_LABELS.environment).toBe('Environment')
+  })
+})

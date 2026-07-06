@@ -1,4 +1,13 @@
-export type EventCategory = 'conflict' | 'protest' | 'cooperation' | 'politics' | 'other'
+export type EventCategory =
+  | 'conflict'
+  | 'protest'
+  | 'cooperation'
+  | 'politics'
+  | 'disaster'
+  | 'economy'
+  | 'health'
+  | 'environment'
+  | 'other'
 
 export interface GdeltEvent {
   id: string

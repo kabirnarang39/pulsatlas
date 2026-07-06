@@ -16,12 +16,26 @@ export function categoryForRootCode(rootCode: string): EventCategory {
   return 'other'
 }
 
-export const ALL_CATEGORIES: EventCategory[] = ['conflict', 'protest', 'cooperation', 'politics', 'other']
+export const ALL_CATEGORIES: EventCategory[] = [
+  'conflict',
+  'protest',
+  'cooperation',
+  'politics',
+  'disaster',
+  'economy',
+  'health',
+  'environment',
+  'other',
+]
 
 export const CATEGORY_LABELS: Record<EventCategory, string> = {
   conflict: 'Conflict',
   protest: 'Protest',
   cooperation: 'Cooperation & Aid',
   politics: 'Politics & Diplomacy',
+  disaster: 'Disaster',
+  economy: 'Economy',
+  health: 'Health',
+  environment: 'Environment',
   other: 'Other',
 }
