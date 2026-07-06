@@ -16,7 +16,7 @@ export function TimeScrubber({ value, min, max, onChange }: TimeScrubberProps) {
         min={min}
         max={max}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-md border border-white/10 bg-card px-2 py-1.5 text-sm text-foreground [color-scheme:dark] focus:border-accent focus:outline-none"
+        className="rounded-md border border-white/10 bg-card px-2 py-1.5 text-sm text-foreground [color-scheme:dark] transition-colors duration-150 ease focus:border-accent focus:outline-none"
       />
     </label>
   )

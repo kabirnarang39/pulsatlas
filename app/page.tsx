@@ -37,13 +37,13 @@ export default function HomePage() {
         {status === 'error' && (
           <div
             role="alert"
-            className="pointer-events-auto flex items-center gap-3 border-b border-destructive/30 bg-destructive/10 px-4 py-2 text-sm text-destructive backdrop-blur-md sm:px-6"
+            className="pointer-events-auto flex animate-[banner-in_200ms_ease-out] items-center gap-3 border-b border-destructive/30 bg-destructive/10 px-4 py-2 text-sm text-destructive backdrop-blur-md sm:px-6"
           >
             Couldn&apos;t load this day&apos;s events.
             <button
               type="button"
               onClick={retry}
-              className="rounded-md border border-destructive/40 px-2 py-1 font-medium transition hover:bg-destructive/20"
+              className="rounded-md border border-destructive/40 px-2 py-1 font-medium transition duration-150 ease hover:bg-destructive/20 active:scale-[0.97]"
             >
               Retry
             </button>
@@ -52,7 +52,7 @@ export default function HomePage() {
 
         <div className="flex-1" />
 
-        <div className="pointer-events-auto flex justify-center border-t border-white/5 bg-card/40 px-4 py-3 backdrop-blur-md sm:px-6">
+        <div className="pointer-events-auto flex max-h-24 justify-center overflow-hidden border-t border-white/5 bg-card/40 px-4 py-3 backdrop-blur-md sm:px-6">
           <AdSlot slotId="1111111111" />
         </div>
       </div>

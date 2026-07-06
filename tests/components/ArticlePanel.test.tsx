@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { ArticlePanel } from '@/components/ArticlePanel'
 import type { GdeltEvent } from '@/lib/gdelt/types'
 
@@ -31,5 +31,16 @@ describe('ArticlePanel', () => {
     render(<ArticlePanel event={event} onClose={onClose} />)
     screen.getByLabelText('Close').click()
     expect(onClose).toHaveBeenCalled()
+  })
+
+  it('keeps content visible during the closing transition, then removes it once the transition ends', () => {
+    const { rerender, container } = render(<ArticlePanel event={event} onClose={() => {}} />)
+    expect(screen.getByText('Paris, France')).toBeInTheDocument()
+
+    rerender(<ArticlePanel event={null} onClose={() => {}} />)
+    expect(screen.getByText('Paris, France')).toBeInTheDocument()
+
+    fireEvent.transitionEnd(container.querySelector('aside')!)
+    expect(container).toBeEmptyDOMElement()
   })
 })

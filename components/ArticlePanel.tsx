@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState } from 'react'
 import type { GdeltEvent } from '@/lib/gdelt/types'
 import { CATEGORY_LABELS } from '@/lib/gdelt/categoryMap'
 
@@ -8,34 +9,51 @@ interface ArticlePanelProps {
 }
 
 export function ArticlePanel({ event, onClose }: ArticlePanelProps) {
-  if (!event) return null
+  const [renderedEvent, setRenderedEvent] = useState<GdeltEvent | null>(event)
+  const [isOpen, setIsOpen] = useState(Boolean(event))
 
-  const actors = [event.actor1Name, event.actor2Name].filter(Boolean).join(' & ')
+  useEffect(() => {
+    if (event) {
+      setRenderedEvent(event)
+      const id = requestAnimationFrame(() => setIsOpen(true))
+      return () => cancelAnimationFrame(id)
+    }
+    setIsOpen(false)
+  }, [event])
+
+  if (!renderedEvent) return null
+
+  const actors = [renderedEvent.actor1Name, renderedEvent.actor2Name].filter(Boolean).join(' & ')
 
   return (
     <aside
       role="complementary"
       aria-label="Event details"
-      className="fixed right-4 top-24 z-20 w-[min(90vw,22rem)] rounded-xl border border-white/10 bg-card/90 p-4 shadow-xl backdrop-blur-md sm:right-6"
+      onTransitionEnd={(e) => {
+        if (e.target === e.currentTarget && !isOpen) setRenderedEvent(null)
+      }}
+      className={`fixed right-4 top-24 z-20 w-[min(90vw,22rem)] rounded-xl border border-white/10 bg-card/90 p-4 shadow-xl backdrop-blur-md transition-[opacity,transform] ease-out sm:right-6 ${
+        isOpen ? 'duration-200 translate-y-0 opacity-100' : 'pointer-events-none duration-[160ms] -translate-y-1 opacity-0'
+      }`}
     >
       <button
         type="button"
         onClick={onClose}
         aria-label="Close"
-        className="absolute right-3 top-3 text-lg leading-none text-muted transition hover:text-foreground"
+        className="absolute right-3 top-3 text-lg leading-none text-muted transition duration-150 ease hover:text-foreground active:scale-[0.97]"
       >
         ×
       </button>
       <p className="pr-6 font-heading text-sm font-semibold uppercase tracking-wide text-accent">
-        {CATEGORY_LABELS[event.category]}
+        {CATEGORY_LABELS[renderedEvent.category]}
       </p>
-      <p className="mt-2 text-base font-medium">{event.locationName}</p>
+      <p className="mt-2 text-base font-medium">{renderedEvent.locationName}</p>
       {actors && <p className="mt-1 text-sm text-muted">{actors}</p>}
       <a
-        href={event.sourceUrl}
+        href={renderedEvent.sourceUrl}
         target="_blank"
         rel="noreferrer noopener"
-        className="mt-3 inline-block text-sm font-medium text-accent hover:underline"
+        className="mt-3 inline-block text-sm font-medium text-accent transition-colors duration-150 ease hover:underline"
       >
         Read full story →
       </a>

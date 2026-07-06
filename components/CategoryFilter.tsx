@@ -28,8 +28,8 @@ export function CategoryFilter({ selected, onChange }: CategoryFilterProps) {
             onClick={() => toggle(category)}
             className={
               isSelected
-                ? 'rounded-full border border-accent bg-accent/20 px-3 py-1.5 text-sm font-medium text-foreground transition'
-                : 'rounded-full border border-white/10 bg-card px-3 py-1.5 text-sm font-medium text-muted transition hover:border-white/25 hover:text-foreground'
+                ? 'rounded-full border border-accent bg-accent/20 px-3 py-1.5 text-sm font-medium text-foreground transition duration-150 ease active:scale-[0.97]'
+                : 'rounded-full border border-white/10 bg-card px-3 py-1.5 text-sm font-medium text-muted transition duration-150 ease hover:border-white/25 hover:text-foreground active:scale-[0.97]'
             }
           >
             {CATEGORY_LABELS[category]}
