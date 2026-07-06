@@ -13,7 +13,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'date must be provided as YYYYMMDD' }, { status: 400 })
   }
 
-  const categories = (categoriesParam ? categoriesParam.split(',') : ALL_CATEGORIES) as EventCategory[]
+  const validCategories = new Set<string>(ALL_CATEGORIES)
+  const categories = categoriesParam
+    ? (categoriesParam
+        .split(',')
+        .map((c) => c.trim())
+        .filter((c) => validCategories.has(c)) as EventCategory[])
+    : ALL_CATEGORIES
   const events = await queryEvents(blobStore, date, categories)
 
   return NextResponse.json({ date, events })

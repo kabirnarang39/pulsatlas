@@ -1828,6 +1828,8 @@ In the deployed site's Netlify dashboard, under Functions, confirm `ingest-gdelt
 
 Sign up for Google AdSense, get approved for `pulsatlas.com`, then replace `ca-pub-REPLACE_WITH_PUBLISHER_ID` in `components/AdSlot.tsx` with the real publisher ID, and replace the placeholder `slotId="1111111111"` in `app/page.tsx` with a real ad unit slot ID from the AdSense dashboard.
 
+Note: the AdSense loader `<Script>` tag in `app/layout.tsx` also has a `ca-pub-REPLACE_WITH_PUBLISHER_ID` placeholder in its `src` — replace it with the same real publisher ID at this time.
+
 - [ ] **Step 4: Manual — wire up Buy Me a Coffee**
 
 Create a Buy Me a Coffee page for Pulsatlas, then replace `REPLACE_WITH_USERNAME` in `components/SupportLink.tsx` with the real BMC username.
