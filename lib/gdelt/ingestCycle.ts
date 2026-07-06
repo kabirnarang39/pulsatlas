@@ -39,8 +39,9 @@ export async function runIngestCycle(
     try {
       const gkgCsv = await fetchAndUnzipCsv(fetchFn, gkgUrl)
       gkgEvents = parseGkgCsv(gkgCsv)
-    } catch {
+    } catch (error) {
       // GKG fetch/parse failure must not block Events ingestion — retried next cycle
+      console.error('GKG ingestion failed:', error)
     }
   }
 
